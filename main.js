@@ -2,7 +2,8 @@ const { app, BrowserWindow, ipcMain } = require('electron');
 const { spawn } = require('child_process');
 
 let window;
-let python;
+let python_pc_info;
+let python_msg;
 
 // Create the main window
 function createWindow() {
@@ -10,10 +11,10 @@ function createWindow() {
     window.loadFile('index.html');
 
     // Start the Python script for PC discovery
-    python = spawn('python', ['./pc_info.py']);
+    python_pc_info = spawn('python', ['./pc_info.py']);
     
     // Listen for broadcasting PCs from the Python script
-    python.stdout.on('data', function(data) {
+    python_pc_info.stdout.on('data', function(data) {
         try {
             const pcs = JSON.parse(data.toString('utf8').trim());
             if (Array.isArray(pcs)) {
@@ -24,20 +25,14 @@ function createWindow() {
         }
     });
 
-    python.stderr.on('data', (data) => {
+    python_pc_info.stderr.on('data', (data) => {
         console.error(`stderr: ${data}`);
     });
 
-    python.on('close', (code) => {
+    python_pc_info.on('close', (code) => {
         console.log(`Python process exited with code ${code}`);
     });
 }
-
-// Handle sending messages from the renderer process
-ipcMain.on('send-message', (event, message, targetIp) => {
-    const target = targetIp ? targetIp : '255.255.255.255'; // Use broadcast if no IP is provided
-    python.stdin.write(`${message}\n${target}\n`); // Send message and target IP to Python script
-});
 
 app.on('ready', createWindow);
 
