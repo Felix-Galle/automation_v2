@@ -1,0 +1,69 @@
+/* styles.css */
+
+/* Basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+/* Heading styling */
+h1 {
+    margin-bottom: 20px;
+    font-size: 2em;
+    color: #4a4a4a;
+}
+
+/* Dropdown styling */
+select {
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    transition: border-color 0.3s;
+}
+
+/* Dropdown hover effect */
+select:hover {
+    border-color: #888;
+}
+
+/* Dropdown focus effect */
+select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Option styling */
+option {
+    padding: 10px;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    body {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 1.5em;
+    }
+
+    select {
+        width: 100%;
+    }
+}

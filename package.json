@@ -1,0 +1,19 @@
+{
+  "name": "automation",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "test": "--test",
+    "start": "electron ."
+  },
+  "keywords": [],
+  "author": "Felix-Galle",
+  "license": "MIT",
+  "description": "",
+  "devDependencies": {
+    "electron": "^34.0.0"
+  },
+  "dependencies": {
+    "python-shell": "^5.0.0"
+  }
+}

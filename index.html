@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PC Info</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to the CSS file -->
+</head>
+<body>
+    <h1>Available PCs</h1>
+    <select id="pc-dropdown">
+        <option value="">Select a PC</option>
+    </select>
+
+    <h2>Send Message</h2>
+    <input type="text" id="message-input" placeholder="Enter your message" />
+    <input type="text" id="ip-input" placeholder="Enter target IP (leave empty for broadcast)" />
+    <button id="send-button">Send</button>
+
+    <h2>Received Messages</h2>
+    <ul id="message-list"></ul>
+
+    <script>
+        const { ipcRenderer } = require('electron');
+
+        // Update the dropdown with available PCs
+        ipcRenderer.on('update-pcs', (event, pcs) => {
+            const dropdown = document.getElementById('pc-dropdown');
+            dropdown.innerHTML = '<option value="">Select a PC</option>'; // Clear existing options
+
+            pcs.forEach(pc => {
+                const option = document.createElement('option');
+                option.value = pc.ip; // You can set the value to the IP or name
+                option.textContent = `${pc.name} (${pc.ip})`; // Display name and IP
+                dropdown.appendChild(option);
+            });
+        });
+
+        // Send message when button is clicked
+        document.getElementById('send-button').addEventListener('click', () => {
+            const message = document.getElementById('message-input').value;
+            const targetIp = document.getElementById('ip-input').value;
+            ipcRenderer.send('send-message', message, targetIp);
+        });
+
+        // Receive messages from the Python script
+        ipcRenderer.on('receive-message', (event, message) => {
+            const messageList = document.getElementById('message-list');
+            const listItem = document.createElement('li');
+            listItem.textContent = message; // Display the received message
+            messageList.appendChild(listItem);
+        });
+    </script>
+</body>
+</html>
