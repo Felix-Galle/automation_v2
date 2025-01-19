@@ -7,7 +7,20 @@ let python_msg;
 
 // Create the main window
 function createWindow() {
-    window = new BrowserWindow({ width: 800, height: 600 });
+    window = new BrowserWindow({ 
+        width: 100,          // Fixed width
+        height: 75,         // Fixed height
+        x: 100,             // x pos
+        y: 100,             //y pos
+        resizable: false,    // Prevent resizing
+        movable: false,      // Prevent moving (note: this is not a direct property)
+        frame: false,        // Remove window frame (no close/minimize/maximize buttons)
+        webPreferences: {
+            nodeIntegration: true, // Enable Node.js integration
+            contextIsolation: false // Disable context isolation for easier access to Node.js
+        }
+    });
+    
     window.loadFile('index.html');
 
     // Start the Python script for PC discovery
