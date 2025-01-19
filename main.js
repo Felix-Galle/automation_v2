@@ -9,14 +9,18 @@ function createWindow() {
     window = new BrowserWindow({ width: 800, height: 600 });
     window.loadFile('index.html');
 
-    // Start the Python script
-    python = spawn('python', ['./msg.py']);
+    // Start the Python script for PC discovery
+    python = spawn('python', ['./pc_info.py']);
     
-    // Listen for messages from the Python script
+    // Listen for broadcasting PCs from the Python script
     python.stdout.on('data', function(data) {
-        const message = data.toString('utf8').trim();
-        if (message) {
-            window.webContents.send('receive-message', message); // Send the message to the renderer process
+        try {
+            const pcs = JSON.parse(data.toString('utf8').trim());
+            if (Array.isArray(pcs)) {
+                window.webContents.send('update-pcs', pcs); // Send the list of PCs to the renderer process
+            }
+        } catch (error) {
+            console.error('Error parsing PC data:', error);
         }
     });
 

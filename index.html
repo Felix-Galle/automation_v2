@@ -30,7 +30,7 @@
 
             pcs.forEach(pc => {
                 const option = document.createElement('option');
-                option.value = pc.ip; // You can set the value to the IP or name
+                option.value = pc.ip; // Set the value to the IP
                 option.textContent = `${pc.name} (${pc.ip})`; // Display name and IP
                 dropdown.appendChild(option);
             });
