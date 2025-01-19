@@ -14,6 +14,7 @@
     "electron": "^34.0.0"
   },
   "dependencies": {
+    "automation": "file:",
     "python-shell": "^5.0.0"
   }
 }

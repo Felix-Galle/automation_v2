@@ -5,34 +5,63 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PC Info</title>
     <link rel="stylesheet" href="styles.css"> <!-- Link to the CSS file -->
+    <style>
+        body {
+            display: flex;
+            font-family: Arial, sans-serif;
+        }
+
+        #sidebar {
+            width: 250px;
+            padding: 10px;
+            border-right: 1px solid #ccc;
+        }
+
+        #main-content {
+            flex-grow: 1;
+            padding: 20px;
+        }
+
+        h1, h2 {
+            margin: 0 0 10px;
+        }
+
+        select, input, button {
+            margin-bottom: 10px;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
-    <h1>Available PCs</h1>
-    <select id="pc-dropdown">
-        <option value="">Select a PC</option>
-    </select>
+    <div id="sidebar">
+        <h2>Available PCs</h2>
+        <ul id="pc-list">
+            <!-- List of PCs will be populated here -->
+        </ul>
+    </div>
 
-    <h2>Send Message</h2>
-    <input type="text" id="message-input" placeholder="Enter your message" />
-    <input type="text" id="ip-input" placeholder="Enter target IP (leave empty for broadcast)" />
-    <button id="send-button">Send</button>
+    <div id="main-content">
+        <h1>Send Message</h1>
+        <input type="text" id="message-input" placeholder="Enter your message" />
+        <input type="text" id="ip-input" placeholder="Enter target IP (leave empty for broadcast)" />
+        <button id="send-button">Send</button>
 
-    <h2>Received Messages</h2>
-    <ul id="message-list"></ul>
+        <h2>Received Messages</h2>
+        <ul id="message-list"></ul>
+    </div>
 
     <script>
         const { ipcRenderer } = require('electron');
 
-        // Update the dropdown with available PCs
+        // Update the sidebar with available PCs
         ipcRenderer.on('update-pcs', (event, pcs) => {
-            const dropdown = document.getElementById('pc-dropdown');
-            dropdown.innerHTML = '<option value="">Select a PC</option>'; // Clear existing options
+            const pcList = document.getElementById('pc-list');
+            pcList.innerHTML = ''; // Clear existing list
 
             pcs.forEach(pc => {
-                const option = document.createElement('option');
-                option.value = pc.ip; // Set the value to the IP
-                option.textContent = `${pc.name} (${pc.ip})`; // Display name and IP
-                dropdown.appendChild(option);
+                const listItem = document.createElement('li');
+                listItem.textContent = `${pc.name}:${pc.ip}`; // Format as Name:IP
+                pcList.appendChild(listItem);
             });
         });
 
