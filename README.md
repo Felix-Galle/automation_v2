@@ -8,13 +8,13 @@ This is a simple automation project that works on a home network and allows for 
 - PC discovery functionality.
 
 ## Requirements
-- Python 3.x
-- Node.js
-- Electron
+- Python 3.11
+- Node.js 10.9.0 
+- Electron 
 
 ## Environment
 - **Operating System**: Windows 11
-- **Author**: [Your Name]
+- **Author**: Felix Gallé
 
 ## Usage
 1. Clone the repository.
@@ -22,4 +22,4 @@ This is a simple automation project that works on a home network and allows for 
 3. Run the application.
 
 ## Notes
-Feel free to add more features or improvements as you think of them!
+Feel free to send me an issue for any ideas that you may have.
