@@ -10,8 +10,8 @@ function createWindow() {
     window = new BrowserWindow({ 
         width: 100,          // Fixed width
         height: 75,         // Fixed height
-        x: 100,             // x pos
-        y: 100,             //y pos
+        x: 500,             // x pos
+        y: 200,             //y pos
         resizable: false,    // Prevent resizing
         movable: false,      // Prevent moving (note: this is not a direct property)
         frame: false,        // Remove window frame (no close/minimize/maximize buttons)
