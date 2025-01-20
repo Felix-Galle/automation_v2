@@ -48,6 +48,9 @@
 
         <h2>Received Messages</h2>
         <ul id="message-list"></ul>
+        <div id="drop-area">
+            <p>Drag and drop a file here</p>
+        </div>
     </div>
 
     <script>
@@ -78,6 +81,29 @@
             const listItem = document.createElement('li');
             listItem.textContent = message; // Display the received message
             messageList.appendChild(listItem);
+        });
+
+        // Enable drag-and-drop functionality
+        const dropArea = document.getElementById('drop-area');
+
+        dropArea.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            dropArea.classList.add('highlight');
+        });
+
+        dropArea.addEventListener('dragleave', () => {
+            dropArea.classList.remove('highlight');
+        });
+
+        dropArea.addEventListener('drop', (event) => {
+            event.preventDefault();
+            dropArea.classList.remove('highlight');
+            const files = event.dataTransfer.files;
+            if (files.length > 0) {
+                const filePath = files[0].path;
+                // Send the file path to the Python script
+                ipcRenderer.send('file-dropped', filePath);
+            }
         });
     </script>
 </body>
