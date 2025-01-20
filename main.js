@@ -10,13 +10,8 @@ function createWindow() {
     window = new BrowserWindow({ 
         width: 100,          // Fixed width
         height: 75,         // Fixed height
-<<<<<<< HEAD
         x: 500,             // x pos
-        y: 200,             //y pos
-=======
-        x: 100,             // x pos
-        y: 100,             // y pos
->>>>>>> fe5158797010a4040bbef096ce7768264cdabf59
+        y: 400,             // y pos
         resizable: false,    // Prevent resizing
         movable: false,      // Prevent moving (note: this is not a direct property)
         frame: false,        // Remove window frame (no close/minimize/maximize buttons)
@@ -85,7 +80,7 @@ function createWindow() {
 // IPC listener for file dropped event
 ipcMain.on('file-dropped', (event, filePath) => {
     console.log('File dropped:', filePath);
-    // Here you can call the function to handle the file transfer
+    handleFileTransfer(filePath);
 });
 
 app.on('ready', createWindow);

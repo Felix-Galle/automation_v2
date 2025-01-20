@@ -26,3 +26,12 @@ If you have not done so already, you will need to download various software:
 
 I will not provide any requirement download/installation websites.
 I do not want to have responsability about any accidently injected malware.
+
+## Ports
+
+12010 - pc_info.py sender port
+12000 - pc_info.py receiver port
+12110 - msg.py sender port
+12100 - msg.py receiver port
+12210 - file_transfer.py sender port
+12200 - file_transfer.py receiver port
