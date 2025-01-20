@@ -11,9 +11,9 @@ BROADCAST_PORT = 12000
 broadcasting_ips = set()  # Set to store unique broadcasting IPs
 
 # Set up logging
-log_folder = 'pc_info-log'
+log_folder = 'pc_info-logs'
 os.makedirs(log_folder, exist_ok=True)  # Create the log folder if it doesn't exist
-log_file = os.path.join(log_folder, 'pc_info.log')
+log_file = os.path.join(log_folder, f'pc_info-{datetime.now()}.log')
 
 logging.basicConfig(
     filename=log_file,
