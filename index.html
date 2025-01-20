@@ -5,32 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PC Info</title>
     <link rel="stylesheet" href="styles.css"> <!-- Link to the CSS file -->
-    <style>
-        body {
-            display: flex;
-            font-family: Arial, sans-serif;
-        }
-
-        #sidebar {
-            width: 250px;
-            padding: 10px;
-            border-right: 1px solid #ccc;
-        }
-
-        #main-content {
-            flex-grow: 1;
-            padding: 20px;
-        }
-
-        h1, h2 {
-            margin: 0 0 10px;
-        }
-
-        select, input, button {
-            margin-bottom: 10px;
-            width: 100%;
-        }
-    </style>
 </head>
 <body>
     <div id="sidebar">
@@ -41,13 +15,10 @@
     </div>
 
     <div id="main-content">
-        <h1>Send Message</h1>
-        <input type="text" id="message-input" placeholder="Enter your message" />
-        <input type="text" id="ip-input" placeholder="Enter target IP (leave empty for broadcast)" />
-        <button id="send-button">Send</button>
-
-        <h2>Received Messages</h2>
-        <ul id="message-list"></ul>
+        <h1>Drag and Drop a File</h1>
+        <div id="drop-area">
+            <p>Drag and drop a file here</p>
+        </div>
     </div>
 
     <script>
@@ -65,19 +36,27 @@
             });
         });
 
-        // Send message when button is clicked
-        document.getElementById('send-button').addEventListener('click', () => {
-            const message = document.getElementById('message-input').value;
-            const targetIp = document.getElementById('ip-input').value;
-            ipcRenderer.send('send-message', message, targetIp);
+        // Enable drag-and-drop functionality
+        const dropArea = document.getElementById('drop-area');
+
+        dropArea.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            dropArea.classList.add('highlight');
         });
 
-        // Receive messages from the Python script
-        ipcRenderer.on('receive-message', (event, message) => {
-            const messageList = document.getElementById('message-list');
-            const listItem = document.createElement('li');
-            listItem.textContent = message; // Display the received message
-            messageList.appendChild(listItem);
+        dropArea.addEventListener('dragleave', () => {
+            dropArea.classList.remove('highlight');
+        });
+
+        dropArea.addEventListener('drop', (event) => {
+            event.preventDefault();
+            dropArea.classList.remove('highlight');
+            const files = event.dataTransfer.files;
+            if (files.length > 0) {
+                const filePath = files[0].path;
+                // Send the file path to the Python script
+                ipcRenderer.send('file-dropped', filePath);
+            }
         });
     </script>
 </body>
