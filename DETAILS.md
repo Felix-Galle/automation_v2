@@ -13,6 +13,7 @@ Its mainly to cut down on any questions.
 - type: New-NetFirewallRule -LocalPort 12110 -Action Allow - Profile Any
 - type: New-NetFirewallRule -LocalPort 12200 -Action Allow - Profile Any
 - type: New-NetFirewallRule -LocalPort 12210 -Action Allow - Profile Any
+
 These commands allow for the software to send and recieve the data.
 If you cannot get administrator to unblock those ports, then the software cannot receive any information.
 
