@@ -16,7 +16,7 @@ This is a simple automation project that works on a home network and allows for 
 
 ## Setup
 
-- Check DETAILS.md for setup instructions. https://github.com/Felix-Galle/automation/blob/main/DETAILS.md
+- Check [DETAILS.md](https://github.com/Felix-Galle/automation/blob/main/DETAILS.md) for setup information
 
 ## Environment
 
