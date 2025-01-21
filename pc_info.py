@@ -10,9 +10,9 @@ import getpass
 import platform
 
 
-from settings_loader import settings
+from settings_loader import Settings
 
-BROADCAST_PORT = settings.load_ports(filename="pc_info")
+BROADCAST_PORT = Settings.load_ports(filename="pc_info")
 broadcasting_ips = set()  # Set to store unique broadcasting IPs
 
 # Set up logging
