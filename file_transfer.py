@@ -8,10 +8,8 @@ def send_file(file_path, destination_ip, destination_port=12200, source_port=122
         print(f"Error: The file '{file_path}' does not exist.")
         return
 
-    # Create a UDP socket
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-    # Bind the socket to the source port (12210)
     sock.bind(('', source_port))
 
     # Open the file and read it in chunks
