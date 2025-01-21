@@ -9,7 +9,10 @@ from datetime import datetime
 import getpass
 import platform
 
-BROADCAST_PORT = 12000
+
+from settings_loader import settings
+
+BROADCAST_PORT = settings.load_ports(filename="pc_info")
 broadcasting_ips = set()  # Set to store unique broadcasting IPs
 
 # Set up logging
