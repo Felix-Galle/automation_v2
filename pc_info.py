@@ -15,7 +15,9 @@ broadcasting_ips = set()  # Set to store unique broadcasting IPs
 # Set up logging
 log_folder = 'log/pc_info-logs'
 os.makedirs(log_folder, exist_ok=True)  # Create the log folder if it doesn't exist
-log_file = os.path.join(log_folder, f'pc_info-{datetime.now()}.log')
+
+log_filename = f"pc_info-{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.log"
+log_file = os.path.join(log_folder, log_filename)
 
 logging.basicConfig(
     filename=log_file,
@@ -31,7 +33,6 @@ def get_ip():
     return ip
 
 def get_computer_info():
-    """Retrieve IP, Computer Name, and Username"""
     ip = get_ip()
     computer_name = platform.node()
     username = getpass.getuser()
@@ -55,7 +56,6 @@ def receive_broadcast():
             print_broadcasting_ips()
 
 def print_broadcasting_ips():
-    """Log and print all broadcasting IPs"""
     broadcasting_list = [{"name": pc_name, "ip": ip} for pc_name, ip in broadcasting_ips]
     
     logging.info(f"{datetime.now()} - All IPs found: {', '.join(broadcasting_ips)}")
@@ -64,7 +64,6 @@ def print_broadcasting_ips():
     sys.stdout.flush()  # Ensure the output is flushed
 
 def update_info_every_2_seconds():
-    """Function that updates and provides IP, ComputerName, and Username every 2 seconds"""
     while True:
         computer_info = get_computer_info()  # Get the current computer info
         print(json.dumps([computer_info]))  # Output as JSON for Electron or other scripts
