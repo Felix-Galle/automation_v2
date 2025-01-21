@@ -6,6 +6,8 @@ import json
 import os
 import logging
 from datetime import datetime
+import getpass
+import platform
 
 BROADCAST_PORT = 12000
 broadcasting_ips = set()  # Set to store unique broadcasting IPs
@@ -28,6 +30,14 @@ def get_ip():
     s.close()
     return ip
 
+def get_computer_info():
+    """Retrieve IP, Computer Name, and Username"""
+    ip = get_ip()
+    computer_name = platform.node()
+    username = getpass.getuser()
+
+    return {"IP": ip, "ComputerName": computer_name, "Username": username}
+
 def receive_broadcast():
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     sock.bind(('', BROADCAST_PORT))  # Bind to all interfaces on the specified port
@@ -45,23 +55,27 @@ def receive_broadcast():
             print_broadcasting_ips()
 
 def print_broadcasting_ips():
-    # Create a list of broadcasting PCs
+    """Log and print all broadcasting IPs"""
     broadcasting_list = [{"name": pc_name, "ip": ip} for pc_name, ip in broadcasting_ips]
     
-    # Log the current broadcasting IPs
     logging.info(f"{datetime.now()} - All IPs found: {', '.join(broadcasting_ips)}")
     
-    # Send the list to the Electron app as JSON
     print(json.dumps(broadcasting_list))
     sys.stdout.flush()  # Ensure the output is flushed
 
+def update_info_every_2_seconds():
+    """Function that updates and provides IP, ComputerName, and Username every 2 seconds"""
+    while True:
+        computer_info = get_computer_info()  # Get the current computer info
+        print(json.dumps([computer_info]))  # Output as JSON for Electron or other scripts
+        sys.stdout.flush()  # Ensure the output is flushed
+        time.sleep(2)  # Wait for 2 seconds before updating again
+
 if __name__ == "__main__":
-    # Log the start of the program
     logging.info(f"{datetime.now()} - Program started.")
-    
-    # Start the receiver in a separate thread
     threading.Thread(target=receive_broadcast, daemon=True).start()
-    
+    threading.Thread(target=update_info_every_2_seconds, daemon=True).start()
+
     try:
         # Keep the main thread alive
         while True:
