@@ -27,7 +27,7 @@ function createWindow() {
     window.webContents.on('will-navigate', (event) => {
         event.preventDefault();
     });
-
+ 
     window.webContents.on('did-finish-load', () => {
         window.webContents.executeJavaScript(`
             const dropArea = document.getElementById('drop-area');
