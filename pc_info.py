@@ -6,14 +6,29 @@ import json
 import os
 import logging
 from datetime import datetime
+import getpass
+import platform
 
-BROADCAST_PORT = 12000
+from settings_loader import Settings
+
+settings = Settings()  # Create an instance of the Settings class
+port_settings = settings.load_ports(filename="pc_info")  # Load the port settings
+
+# Check if port settings are valid and extract broadcast port
+if port_settings and "broadcast_port" in port_settings:
+    BROADCAST_PORT = port_settings["broadcast_port"]
+else:
+    print("Error: Broadcast port setting not found.")
+    sys.exit(1)  # Exit if broadcast port is not found
+
 broadcasting_ips = set()  # Set to store unique broadcasting IPs
 
 # Set up logging
 log_folder = 'log/pc_info-logs'
 os.makedirs(log_folder, exist_ok=True)  # Create the log folder if it doesn't exist
-log_file = os.path.join(log_folder, f'pc_info-{datetime.now()}.log')
+
+log_filename = f"pc_info-{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.log"
+log_file = os.path.join(log_folder, log_filename)
 
 logging.basicConfig(
     filename=log_file,
@@ -27,6 +42,13 @@ def get_ip():
     ip = s.getsockname()[0]
     s.close()
     return ip
+
+def get_computer_info():
+    ip = get_ip()
+    computer_name = platform.node()
+    username = getpass.getuser()
+
+    return {"IP": ip, "ComputerName": computer_name, "Username": username}
 
 def receive_broadcast():
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -45,23 +67,25 @@ def receive_broadcast():
             print_broadcasting_ips()
 
 def print_broadcasting_ips():
-    # Create a list of broadcasting PCs
     broadcasting_list = [{"name": pc_name, "ip": ip} for pc_name, ip in broadcasting_ips]
     
-    # Log the current broadcasting IPs
     logging.info(f"{datetime.now()} - All IPs found: {', '.join(broadcasting_ips)}")
     
-    # Send the list to the Electron app as JSON
     print(json.dumps(broadcasting_list))
     sys.stdout.flush()  # Ensure the output is flushed
 
+def update_info_every_2_seconds():
+    while True:
+        computer_info = get_computer_info()  # Get the current computer info
+        print(json.dumps([computer_info]))  # Output as JSON for Electron or other scripts
+        sys.stdout.flush()  # Ensure the output is flushed
+        time.sleep(2)  # Wait for 2 seconds before updating again
+
 if __name__ == "__main__":
-    # Log the start of the program
     logging.info(f"{datetime.now()} - Program started.")
-    
-    # Start the receiver in a separate thread
     threading.Thread(target=receive_broadcast, daemon=True).start()
-    
+    threading.Thread(target=update_info_every_2_seconds, daemon=True).start()
+
     try:
         # Keep the main thread alive
         while True:

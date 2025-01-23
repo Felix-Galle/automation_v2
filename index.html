@@ -3,61 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PC Info</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Link to the CSS file -->
+    <title>File Sender</title>
+    <style>
+        #drop-area {
+            width: 400px;
+            height: 200px;
+            border: 2px dashed #000;
+            text-align: center;
+            padding: 10px;
+            margin: 20px;
+            font-size: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        input, button {
+            font-size: 16px;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-    <div id="sidebar">
-        <h2>Available PCs</h2>
-        <ul id="pc-list">
-            <!-- List of PCs will be populated here -->
-        </ul>
-    </div>
 
-    <div id="main-content">
-        <h1>Drag and Drop a File</h1>
-        <div id="drop-area">
-            <p>Drag and drop a file here</p>
-        </div>
-    </div>
+    <div id="drop-area">Drag and drop a file here</div>
+    <input type="text" id="destination-ip" placeholder="Enter Destination IP" />
+    <button id="send-file-btn">Send File</button>
 
     <script>
-        const { ipcRenderer } = require('electron');
-
-        // Update the sidebar with available PCs
-        ipcRenderer.on('update-pcs', (event, pcs) => {
-            const pcList = document.getElementById('pc-list');
-            pcList.innerHTML = ''; // Clear existing list
-
-            pcs.forEach(pc => {
-                const listItem = document.createElement('li');
-                listItem.textContent = `${pc.name}:${pc.ip}`; // Format as Name:IP
-                pcList.appendChild(listItem);
-            });
-        });
-
-        // Enable drag-and-drop functionality
+        const { exec } = require('child_process');
         const dropArea = document.getElementById('drop-area');
+        const destinationIpInput = document.getElementById('destination-ip');
+        const sendFileBtn = document.getElementById('send-file-btn');
 
+        let filePath = '';
+
+        // Handle drag and drop functionality
         dropArea.addEventListener('dragover', (event) => {
             event.preventDefault();
-            dropArea.classList.add('highlight');
-        });
-
-        dropArea.addEventListener('dragleave', () => {
-            dropArea.classList.remove('highlight');
         });
 
         dropArea.addEventListener('drop', (event) => {
             event.preventDefault();
-            dropArea.classList.remove('highlight');
-            const files = event.dataTransfer.files;
-            if (files.length > 0) {
-                const filePath = files[0].path;
-                // Send the file path to the Python script
-                ipcRenderer.send('file-dropped', filePath);
+            filePath = event.dataTransfer.files[0].path;
+            dropArea.textContent = `File selected: ${filePath}`;
+        });
+
+        sendFileBtn.addEventListener('click', () => {
+            const destinationIp = destinationIpInput.value;
+            if (filePath && destinationIp) {
+                // Call Python script with file path and destination IP
+                exec(`python send_file.py "${filePath}" "${destinationIp}"`, (error, stdout, stderr) => {
+                    if (error) {
+                        console.error(`exec error: ${error}`);
+                        return;
+                    }
+                    console.log(`stdout: ${stdout}`);
+                    console.error(`stderr: ${stderr}`);
+                });
+            } else {
+                alert('Please provide both a file and a destination IP.');
             }
         });
     </script>
+
 </body>
 </html>

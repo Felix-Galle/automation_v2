@@ -16,18 +16,17 @@ This is a simple automation project that works on a home network and allows for 
 
 ## Setup
 
-- Check DETAILS.md for setup instructions. https://github.com/Felix-Galle/automation/blob/main/DETAILS.md
+- Check [DETAILS.md](https://github.com/Felix-Galle/automation/blob/main/DETAILS.md) for setup information
 
 ## Environment
 
 - **Operating System**: Windows 11
-- **Author**: Felix Gallé
+- **Author**: Felix-Galle
 
-## Usage
+## Releases
 
-1. Clone the repository.
-2. Install the required dependencies.
-3. Run the application.
+There are no releases yet, nor do I know when there will be as I've got a lot going on and am trying to find the time to code it. 
+I tend to do little bits here and there, so even though it looks like a lot of commits, there is not much changed.
 
 ## Notes
 
