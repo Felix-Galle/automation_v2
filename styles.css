@@ -52,17 +52,21 @@ h1 {
     margin: 5px 0;
 }
 
-/* Drop area styling */
 #drop-area {
-    border: 2px dashed #ccc;
-    padding: 20px;
+    width: 400px;
+    height: 200px;
+    border: 2px dashed #000;
     text-align: center;
-    margin-top: 20px;
+    padding: 10px;
+    margin: 20px;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-
-#drop-area p {
-    font-size: 1.2em;
-    color: #666;
+input, button {
+    font-size: 16px;
+    margin-top: 10px;
 }
 
 /* Highlight drop area on hover */
