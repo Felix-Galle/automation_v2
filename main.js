@@ -14,7 +14,7 @@ function createWindow() {
 
     if (!windowSettings) {
         // Default settings if no settings found
-        windowSettings = { width: 100, height: 75, x: 500, y: 400 };
+        windowSettings = { width: 100, height: 75, x: 500, y: 400 , resizable: false , movable: false, frame: false};
     }
 
     // Create the Electron window with settings
@@ -23,9 +23,9 @@ function createWindow() {
         height: windowSettings.height,     // Dynamic height
         x: windowSettings.x,               // Dynamic x position
         y: windowSettings.y,               // Dynamic y position
-        resizable: false,                  // Prevent resizing
-        movable: false,                    // Prevent moving (note: this is not a direct property)
-        frame: false,                      // Remove window frame (no close/minimize/maximize buttons)
+        resizable: windowSettings.resizable,                  // Prevent resizing
+        movable: windowSettings.movable,                    // Prevent moving (note: this is not a direct property)
+        frame: windowSettings.frame,                      // Remove window frame (no close/minimize/maximize buttons)
         webPreferences: {
             nodeIntegration: true,         // Enable Node.js integration
             contextIsolation: false       // Disable context isolation for easier access to Node.js

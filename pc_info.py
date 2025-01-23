@@ -9,10 +9,18 @@ from datetime import datetime
 import getpass
 import platform
 
-
 from settings_loader import Settings
 
-BROADCAST_PORT = Settings.load_ports(filename="pc_info")
+settings = Settings()  # Create an instance of the Settings class
+port_settings = settings.load_ports(filename="pc_info")  # Load the port settings
+
+# Check if port settings are valid and extract broadcast port
+if port_settings and "broadcast_port" in port_settings:
+    BROADCAST_PORT = port_settings["broadcast_port"]
+else:
+    print("Error: Broadcast port setting not found.")
+    sys.exit(1)  # Exit if broadcast port is not found
+
 broadcasting_ips = set()  # Set to store unique broadcasting IPs
 
 # Set up logging
