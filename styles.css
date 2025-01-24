@@ -17,20 +17,20 @@ body {
     align-items: center;
     justify-content: center;
     height: 100vh;
-    padding: 20px;
+    padding: 5px;
 }
 
 /* Sidebar styling */
 #sidebar {
     width: 250px;
-    padding: 10px;
+    padding: 5px;
     border-right: 1px solid #ccc;
 }
 
 /* Main content styling */
 #main-content {
     flex-grow: 1;
-    padding: 20px;
+    padding: 5px;
     width: 100%;
     max-width: 600px;
     text-align: center;
@@ -38,7 +38,7 @@ body {
 
 /* Heading styling */
 h1 {
-    margin-bottom: 20px;
+    margin-bottom: 5px;
     font-size: 2em;
     color: #4a4a4a;
 }
@@ -57,8 +57,7 @@ h1 {
     height: 50px;
     border: 2px solid #888;
     text-align: center;
-    padding: 10px;
-    margin: 20px;
+    padding: 5px;
     font-size: 16px;
     display: flex;
     justify-content: center;
@@ -84,7 +83,7 @@ input, button {
 /* Responsive design */
 @media (max-width: 600px) {
     body {
-        padding: 20px;
+        padding: 5px;
     }
 
     h1 {

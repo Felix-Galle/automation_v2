@@ -1,9 +1,9 @@
 {
     "window_position": {
-        "width": 800,
-        "height": 600,
-        "x": 100,
-        "y": 100,
+        "width": 100,
+        "height": 100,
+        "x": 500,
+        "y": 500,
         "resizable": false,
         "movable": false,
         "frame": false
