@@ -80,6 +80,8 @@ input, button {
     border-color: #000;
 }
 
+
+
 /* Responsive design */
 @media (max-width: 600px) {
     body {

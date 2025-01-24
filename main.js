@@ -49,6 +49,15 @@ function createWindow() {
 
     window.loadFile('index.html');
 
+    // Listen for window resize and always-on-top requests from the renderer process
+    ipcMain.on('resize-window', (event, width, height) => {
+        window.setSize(width, height);
+    });
+
+    ipcMain.on('set-topmost', (event, isTopmost) => {
+        window.setAlwaysOnTop(isTopmost);
+    });
+
     // Additional window setup...
 }
 
