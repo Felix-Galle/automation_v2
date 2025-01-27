@@ -17,7 +17,7 @@ I have listed the various ports below with the port number and the reason for it
 12200 - file_transfer.py receiver port
 
 I have provided a dedicated folder for the opening of those ports. You can find it in the following (relative) path:
-/setup. You #NEED# to be in administrator mode to open the ports.
+/setup. You ***NEED*** to be in administrator mode to open the ports.
 Be aware that those files only work on Windows. I have no plans on trying to get them to work on Linux or macOS.
 
 ## Downloads and installation
