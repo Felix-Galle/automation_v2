@@ -25,8 +25,8 @@ This is a simple automation project that works on a home network and allows for 
 
 ## Releases
 
-There are no releases yet, nor do I know when there will be as I've got a lot going on and am trying to find the time to code it. 
-I tend to do little bits here and there, so even though it looks like a lot of commits, there is not much changed.
+There are no releases yet, nor do I know when there will be as I've got a lot going on and am trying to find the time to code it.
+I tend to do little bits here and there, so even though it looks like a lot of commits, there is not much changed. I am just chronically scared of losing my work.
 
 ## Notes
 
