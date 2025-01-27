@@ -9,12 +9,12 @@ Its mainly to cut down on any questions.
 In order for the software to be able to communicate from one computer to another, you need to open the following ports.
 I have listed the various ports below with the port number and the reason for its use.
 
-12010 - pc_info.py sender port
-12000 - pc_info.py receiver port
-12110 - msg.py sender port
-12100 - msg.py receiver port
-12210 - file_transfer.py sender port
-12200 - file_transfer.py receiver port
+- 12010 - pc_info.py sender port
+- 12000 - pc_info.py receiver port
+- 12110 - msg.py sender port
+- 12100 - msg.py receiver port
+- 12210 - file_transfer.py sender port
+- 12200 - file_transfer.py receiver port
 
 I have provided a dedicated folder for the opening of those ports. You can find it in the following (relative) path:
 /setup. You ***NEED*** to be in administrator mode to open the ports.
