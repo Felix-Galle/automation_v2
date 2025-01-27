@@ -4,6 +4,17 @@ const { exec } = require('child_process');
 
 let window;
 
+function loadWindowSettings() {
+    try {
+        const data = fs.readFileSync('settings/win_dim_settings.json', 'utf8');
+        const settings = JSON.parse(data);
+        return settings.window_position;
+    } catch (error) {
+        console.error("Error loading window settings:", error);
+        return null; // Return null if there's an error
+    }
+}
+
 function createWindow() {
     try {
         let windowSettings = loadWindowSettings();
