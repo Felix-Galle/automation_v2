@@ -7,4 +7,7 @@ netsh advfirewall firewall add rule name="Allow Port 12110" dir=in action=allow 
 netsh advfirewall firewall add rule name="Allow Port 12200" dir=in action=allow protocol=TCP localport=12200 profile=any
 netsh advfirewall firewall add rule name="Allow Port 12210" dir=in action=allow protocol=TCP localport=12210 profile=any
 
-echo All ports have been opened.
+echo All necessary ports have been opened.
+echo There is no need to restart your computer.
+echo If it doesn't work. Please do restart your computer
+pause
