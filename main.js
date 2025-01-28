@@ -1,38 +1,58 @@
-// In main.js
 const { app, BrowserWindow, ipcMain } = require('electron');
 const fs = require('fs');
+const { exec } = require('child_process');
 
 let window;
 
-function createWindow() {
-    let windowSettings = loadWindowSettings();
-    if (!windowSettings) {
-        windowSettings = { width: 800, height: 600, x: 100, y: 100, resizable: false, movable: false, frame: false };
+function loadWindowSettings() {
+    try {
+        const data = fs.readFileSync('settings/win_dim_settings.json', 'utf8');
+        const settings = JSON.parse(data);
+        return settings.window_position;
+    } catch (error) {
+        console.error("Error loading window settings:", error);
+        return null; // Return null if there's an error
     }
+}
 
-    window = new BrowserWindow({
-        width: windowSettings.width,
-        height: windowSettings.height,
-        x: windowSettings.x,
-        y: windowSettings.y,
-        resizable: windowSettings.resizable,
-        movable: windowSettings.movable,
-        frame: windowSettings.frame,
-        webPreferences: {
-            nodeIntegration: true,
-            contextIsolation: false
+function createWindow() {
+    try {
+        let windowSettings = loadWindowSettings();
+        if (!windowSettings) {
+            windowSettings = { width: 800, height: 600, x: 100, y: 100, resizable: false, movable: false, frame: false };
         }
-    });
 
-    window.loadFile('index.html');
+        window = new BrowserWindow({
+            width: windowSettings.width,
+            height: windowSettings.height,
+            x: windowSettings.x,
+            y: windowSettings.y,
+            resizable: windowSettings.resizable,
+            movable: windowSettings.movable,
+            frame: windowSettings.frame,
+            webPreferences: {
+                nodeIntegration: true,
+                contextIsolation: false
+            }
+        });
 
-    ipcMain.on('resize-window', (event, width, height) => {
-        window.setSize(width, height);
-    });
+        window.loadFile('index.html');
 
-    ipcMain.on('set-topmost', (event, isTopmost) => {
-        window.setAlwaysOnTop(isTopmost);
-    });
+        ipcMain.on('resize-window', (event, width, height) => {
+            window.setSize(width, height);
+        });
+
+        ipcMain.on('set-topmost', (event, isTopmost) => {
+            window.setAlwaysOnTop(isTopmost);
+        });
+    } catch (error) {
+        // Send error to logger.py
+        exec(`python logger.py "${error.message}"`, (err, stdout, stderr) => {
+            if (err) {
+                console.error(`Error logging failed: ${stderr}`);
+            }
+        });
+    }
 }
 
 app.on('ready', createWindow);
