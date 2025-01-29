@@ -14,16 +14,25 @@ if not os.path.exists(GENERAL_LOG_DIR):
     os.makedirs(GENERAL_LOG_DIR)
 
 def general_log(message):
-    timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    log_file_path = os.path.join(PC_LOG_DIR, f"general_log-{datetime.now()}.txt")
-    with open(log_file_path, 'a') as log_file:
-        log_file.write(f"{timestamp} - {message}\n")
+    timestamp = datetime.now().strftime('%Y-%m-%d %H-%M-%S')  # Changed colons to hyphens
+    log_file_path = os.path.join(PC_LOG_DIR, f"general_log-{timestamp}.txt")
+    try:
+        with open(log_file_path, 'a') as log_file:
+            log_file.write(f"{timestamp} - {message}\n")
+    except Exception as e:
+        with open(log_file_path, 'w') as log_file:
+            log_file.write(f"{timestamp} - {message}\n")
 
 def error_log(error_message):
-    timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-    log_file_path = os.path.join(ERROR_LOG_DIR, f"error_log-{datetime.now()}.txt")
-    with open(log_file_path, 'a') as log_file:
-        log_file.write(f"{timestamp} - {error_message}\n")
+    timestamp = datetime.now().strftime('%Y-%m-%d %H-%M-%S')  # Changed colons to hyphens
+    log_file_path = os.path.join(ERROR_LOG_DIR, f"error_log-{timestamp}.txt")
+    try:
+        with open(log_file_path, 'a') as log_file:
+            log_file.write(f"{timestamp} - {error_message}\n")
+    except Exception as e:
+        with open(log_file_path, 'w') as log_file:
+            log_file.write(f"{timestamp} - {error_message}\n")
+
 
 
 

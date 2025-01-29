@@ -84,7 +84,6 @@ class FileDragWindow(QMainWindow):
 
     def send_file(self, destination_ip):
         # Logic to send the file to the selected destination IP
-        # This will involve calling the file_send.py functionality
         print(f"Sending file to {destination_ip}")  # Placeholder for actual file sending logic
 
     def exit_app(self):
