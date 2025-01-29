@@ -1,1 +1,0 @@
-2025-01-27 17:44:31 - loadWindowSettings is not defined
