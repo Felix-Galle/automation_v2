@@ -5,6 +5,8 @@ import sys
 import json
 import os
 import platform
+import getpass
+from datetime import datetime
 from settings_loader import Settings
 from logger import log_message, log_error  # Import logging functions
 
@@ -18,7 +20,7 @@ else:
     log_error("Error: Broadcast port setting not found.")
     sys.exit(1)  # Exit if broadcast port is not found
 
-broadcasting_ips = set()  # Set to store unique broadcasting IPs
+broadcasting_ips = []  # List to store unique broadcasting IPs
 
 def get_ip():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -44,19 +46,13 @@ def receive_broadcast():
         data, addr = sock.recvfrom(1024)  # Buffer size is 1024 bytes
         pc_name, ip = data.decode().split(',')
         
-        # Add the broadcasting IP to the set
+        # Add the broadcasting IP to the list
         if ip not in broadcasting_ips:
-            broadcasting_ips.add(ip)
+            broadcasting_ips.append((pc_name, ip))
             log_message(f"{datetime.now()} - New broadcasting PC: {pc_name}, {ip}")
-            print_broadcasting_ips()
 
-def print_broadcasting_ips():
-    broadcasting_list = [{"name": pc_name, "ip": ip} for pc_name, ip in broadcasting_ips]
-    
-    log_message(f"{datetime.now()} - All IPs found: {', '.join(broadcasting_ips)}")
-    
-    print(json.dumps(broadcasting_list))
-    sys.stdout.flush()  # Ensure the output is flushed
+def get_broadcasting_ips():
+    return broadcasting_ips
 
 def update_info_every_2_seconds():
     while True:

@@ -11,8 +11,6 @@ This is a simple automation project that works on a home network and allows for 
 ## Requirements
 
 - Python 3.11
-- Node.js 10.9.0
-- Electron
 
 ## Setup
 
